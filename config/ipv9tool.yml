@@ -26,6 +26,9 @@ scanner:
   # Maximum concurrent threads
   max_threads: 10
 
+  # Verbose output (detailed operational feedback)
+  verbose: true
+
 # Security Configuration
 security:
   # Verify DNS responses across multiple servers

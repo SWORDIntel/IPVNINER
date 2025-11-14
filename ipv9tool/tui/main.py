@@ -31,6 +31,7 @@ from ..audit import AuditEngine, MasscanEnumerator
 from ..database import DatabaseManager
 from ..config import ConfigManager
 from ..security import setup_logging
+from .logging_handler import setup_tui_logging
 
 
 class SecurityBanner(Static):
@@ -501,6 +502,9 @@ class IPv9MilitaryTUI(App):
         self.current_job = None
         self.mission_number = 1000
 
+        # TUI logging handler (will be setup after mount)
+        self.tui_log_handler = None
+
     def compose(self) -> ComposeResult:
         """Compose military-grade UI"""
         yield Header()
@@ -540,6 +544,12 @@ class IPv9MilitaryTUI(App):
         self.log_widget = self.query_one("#log-stream", MilitaryLogWidget)
         self.progress_bar = self.query_one("#progress", ProgressBar)
 
+        # Setup TUI logging to capture verbose output
+        self.tui_log_handler = setup_tui_logging(
+            log_callback=self.handle_log_message,
+            level=logging.INFO  # Capture INFO and above
+        )
+
         # Setup data tables
         hosts_table = self.query_one("#hosts-table", DataTable)
         hosts_table.add_columns("IP ADDRESS", "HOSTNAME", "STATUS", "OS TYPE", "LAST CONTACT")
@@ -574,6 +584,30 @@ class IPv9MilitaryTUI(App):
 
         # Start status update timer
         self.set_interval(1.0, self.update_system_status)
+
+    def handle_log_message(self, message: str, level: str):
+        """
+        Handle log messages from modules
+
+        This callback is called by the TUI logging handler to forward
+        log messages to the tactical log widget.
+
+        Args:
+            message: Log message
+            level: Log level (DEBUG, INFO, WARNING, ERROR, CRITICAL)
+        """
+        if self.log_widget:
+            # Map Python logging levels to TUI levels
+            level_map = {
+                "DEBUG": "DEBUG",
+                "INFO": "INFO",
+                "WARNING": "WARNING",
+                "ERROR": "ERROR",
+                "CRITICAL": "CRITICAL"
+            }
+
+            tui_level = level_map.get(level, "INFO")
+            self.log_widget.write_log(message, tui_level)
 
     async def update_system_status(self) -> None:
         """Update system status display"""
