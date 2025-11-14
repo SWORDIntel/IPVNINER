@@ -1,0 +1,26 @@
+[Unit]
+Description=IPv9 DNS Resolver Service
+Documentation=https://github.com/yourusername/ipv9-scanner
+After=network.target
+Wants=network-online.target
+
+[Service]
+Type=forking
+ExecStart=/usr/sbin/dnsmasq --conf-file=/etc/ipv9tool/dnsmasq-ipv9.conf
+ExecReload=/bin/kill -HUP $MAINPID
+PIDFile=/var/run/ipv9-resolver.pid
+Restart=on-failure
+RestartSec=5
+
+# Security hardening
+PrivateTmp=yes
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths=/var/log /var/run
+
+# Resource limits
+LimitNOFILE=8192
+
+[Install]
+WantedBy=multi-user.target

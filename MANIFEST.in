@@ -1,0 +1,9 @@
+include README.md
+include LICENSE
+include requirements.txt
+recursive-include config *.yml *.conf
+recursive-include systemd *.service
+recursive-include scripts *.sh
+recursive-include docs *.md
+recursive-include ipv9tool/web/templates *.html
+recursive-include ipv9tool/web/static *

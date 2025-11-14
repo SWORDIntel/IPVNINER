@@ -1,0 +1,36 @@
+[Unit]
+Description=IPv9 Network Monitor Service
+Documentation=https://github.com/yourusername/ipv9-scanner
+After=network.target ipv9-resolver.service
+Requires=ipv9-resolver.service
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/ipv9-monitor --daemon
+Restart=on-failure
+RestartSec=10
+
+# Run as unprivileged user
+User=ipv9tool
+Group=ipv9tool
+
+# Security hardening
+PrivateTmp=yes
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths=/var/log/ipv9tool /var/lib/ipv9tool
+
+# Sandboxing
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictRealtime=yes
+RestrictNamespaces=yes
+
+# Resource limits
+CPUQuota=50%
+MemoryLimit=512M
+
+[Install]
+WantedBy=multi-user.target
