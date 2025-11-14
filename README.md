@@ -46,39 +46,58 @@ IPv9 Scanner provides comprehensive tools to explore, enumerate, and audit this 
 
 ## 🎯 Features
 
-### Interactive TUI (ipv9scan)
+### Interactive TUI (ipv9scan) - **TEMPEST-Compliant Military Theme**
 
-Real-time Text User Interface with streaming logs:
+Professional tactical interface with TEMPEST-compliant design:
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│  IPv9 Scanner                                      [q]Quit  │
-├─────────────────────────────────────────────────────────────┤
-│  Scanner │ Hosts │ Ports │ Domains                          │
-├─────────────────────────────────────────────────────────────┤
-│  Target: www.v9.chn                                         │
-│  [Resolve DNS] [Ping] [Port Scan] [Enumerate]              │
-│  [Full Audit] [Masscan] [Monitor] [Stop]                   │
-├─────────────────────────────────────────────────────────────┤
-│  Logs (streaming):                                          │
-│  [13:45:12] [INFO] Resolving www.v9.chn...                 │
-│  [13:45:12] [SUCCESS] Resolved to: 1.2.3.4                 │
-│  [13:45:13] [INFO] Starting port scan...                   │
-│  [13:45:15] [SUCCESS] Found 3 open ports                   │
-├─────────────────────────────────────────────────────────────┤
-│  Statistics: 15 domains | 42 hosts | 128 ports             │
-└─────────────────────────────────────────────────────────────┘
+████████████████████████████████████████████████████████████████████████████████
+  CLASSIFICATION: UNCLASSIFIED  │  SYSTEM: IPVNINER  │  FACILITY: TNOC
+████████████████████████████████████████████████████████████████████████████████
+
+╔═══════════════════╗  ╔══════════════════════════════════════════════════╗
+║  SYSTEM STATUS   ║  ║   TACTICAL NETWORK INTELLIGENCE                ║
+╠═══════════════════╣  ╠══════════════════════════════════════════════════╣
+│ SYS STATUS:    █  │  │ DOMAINS DISCOVERED:                       1,245  │
+│ INTEGRITY:     █  │  │ IP ADDRESSES:                             3,891  │
+│ ZULU TIME: 141530Z│  │ ACTIVE HOSTS:                               567  │
+│ UPTIME:   02:45:13│  │ PORTS IDENTIFIED:                         2,134  │
+╚═══════════════════╝  ╚══════════════════════════════════════════════════╝
+
+╔═══════════════════════════ TACTICAL OPERATIONS ════════════════════════════╗
+│ PRIMARY OPS:  [DNS RESOLVE] [PING SWEEP] [PORT SCAN] [ENUMERATE]          │
+│ ADV OPS:      [FULL AUDIT] [MASSCAN] [MONITOR] [█ STOP]                   │
+│ TARGET:       www.v9.chn or IPv4/IPv6                                      │
+│ MISSION PROGRESS: ████████████░░░░░░░░░░░ 60%                             │
+╚════════════════════════════════════════════════════════════════════════════╝
+
+╔═══════════════════════════ TACTICAL LOG ══════════════════════════════════╗
+│ 124530Z ● OPR   MISSION 1000: DNS RESOLUTION OPERATION                    │
+│ 124531Z ► INF   TARGET: www.v9.chn                                        │
+│ 124532Z ✓ OPS   DNS RESOLUTION: SUCCESS                                   │
+│ 124532Z ► INF     ► RESOLVED ADDRESS: 1.2.3.4                             │
+│ 124535Z ● OPR   MISSION 1001: PORT SCAN OPERATION                         │
+│ 124536Z ✓ OPS   PORT SCAN: 3 PORTS IDENTIFIED                             │
+╚════════════════════════════════════════════════════════════════════════════╝
+
+████████████████████████████████████████████████████████████████████████████████
+  CLASSIFICATION: UNCLASSIFIED  │  FACILITY: TNOC  │  SYSTEM: IPVNINER
+████████████████████████████████████████████████████████████████████████████████
 ```
 
-**Features:**
-- ✅ Real-time log streaming
-- ✅ DNS resolution, ping, port scanning
-- ✅ Domain enumeration (pattern-based, phone numbers)
-- ✅ Full network audit (6-phase methodology)
-- ✅ Masscan integration (high-speed enumeration)
-- ✅ Live statistics dashboard
-- ✅ Discovered hosts, ports, domains tables
-- ✅ Keyboard shortcuts (q=quit, d=dark mode, s=stats, l=clear logs, h=help)
+**Military-Grade Features:**
+- 🎖️ **TEMPEST-Compliant**: High-contrast green-on-black phosphor terminal
+- ⏰ **Zulu Time**: Military UTC time format (DDHHMMSSZMONyy)
+- 🔒 **Security Banners**: Classification markings (UNCLASSIFIED)
+- 🎯 **Mission System**: Sequential operation tracking (MISSION 1000, 1001...)
+- 📊 **Tactical Intelligence**: Real-time network statistics
+- 🖥️ **Military Terminology**: OPERATIONAL, SECURE, NOMINAL status
+- ⚡ **Real-time Logs**: Streaming with tactical formatting (●►✓▲█■)
+- 🔐 **Secure Design**: Minimal emissions, monospace grid layout
+- ⌨️ **Tactical Keys**: Q=ABORT, S=STATUS, L=CLEAR LOG, H=HELP, R=REFRESH
+- 🎨 **Professional Polish**: Grid-based layout, double borders, hover effects
+
+**See [docs/TEMPEST_MILITARY_THEME.md](docs/TEMPEST_MILITARY_THEME.md) for complete design documentation**
 
 ### REST API Server (ipv9api)
 
