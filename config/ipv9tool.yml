@@ -69,6 +69,22 @@ web:
   host: "127.0.0.1"
   port: 8080
 
+# Intel Hardware Acceleration (NPU/iGPU)
+acceleration:
+  # Enable Intel NPU (Neural Processing Unit) acceleration
+  enable_npu: true
+
+  # Enable Intel Arc iGPU acceleration
+  enable_gpu: true
+
+  # Prefer NPU over GPU when both available
+  prefer_npu: true
+
+  # Accelerated operations
+  pattern_matching: true      # GPU-accelerated regex matching
+  anomaly_detection: true     # NPU-accelerated ML inference
+  data_processing: true       # Parallel processing on GPU/NPU
+
 # Proxy Configuration (Mullvad-style rotation)
 proxy:
   # Enable proxy rotation
