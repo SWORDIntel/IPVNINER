@@ -1,0 +1,40 @@
+# IPv9 Scanner - Proxy List Configuration
+#
+# Format: type://[user:pass@]host:port [country] [city] [provider]
+#
+# Supported types: http, https, socks5, socks4, tor
+#
+# Examples:
+
+# Mullvad VPN SOCKS5 proxies (requires account number as username)
+socks5://ACCOUNT_NUMBER@us-nyc.mullvad.net:1080 US NewYork Mullvad
+socks5://ACCOUNT_NUMBER@us-lax.mullvad.net:1080 US LosAngeles Mullvad
+socks5://ACCOUNT_NUMBER@gb-lon.mullvad.net:1080 GB London Mullvad
+socks5://ACCOUNT_NUMBER@de-fra.mullvad.net:1080 DE Frankfurt Mullvad
+socks5://ACCOUNT_NUMBER@se-sto.mullvad.net:1080 SE Stockholm Mullvad
+socks5://ACCOUNT_NUMBER@nl-ams.mullvad.net:1080 NL Amsterdam Mullvad
+socks5://ACCOUNT_NUMBER@sg.mullvad.net:1080 SG Singapore Mullvad
+socks5://ACCOUNT_NUMBER@jp.mullvad.net:1080 JP Tokyo Mullvad
+
+# Tor SOCKS5 proxy (local)
+socks5://127.0.0.1:9050 ANON Tor Tor
+
+# HTTP proxies (free/paid services)
+# http://user:pass@proxy1.example.com:8080 US NewYork Provider1
+# http://user:pass@proxy2.example.com:3128 GB London Provider2
+# https://proxy3.example.com:443 DE Frankfurt Provider3
+
+# SOCKS5 proxies (private)
+# socks5://user:pass@1.2.3.4:1080 NL Amsterdam Private
+# socks5://user:pass@5.6.7.8:1080 SG Singapore Private
+
+# Residential proxies (commercial services like Bright Data, Oxylabs)
+# http://user:pass@residential.example.com:8080 US Rotating BrightData
+# http://user:pass@datacenter.example.com:8080 EU Rotating Oxylabs
+
+# Notes:
+# - Comment out lines with # to disable
+# - Replace ACCOUNT_NUMBER with your Mullvad account number
+# - For Tor, ensure tor service is running: systemctl status tor
+# - Test proxies before use: ipv9tool test-proxies
+# - Proxies are rotated based on rotation_strategy in config

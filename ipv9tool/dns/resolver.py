@@ -36,7 +36,14 @@ class IPv9Resolver:
         # Verification mode
         self.verify_dns = self.config.get('security', {}).get('verify_dns', True)
 
+        # Verbose mode
+        self.verbose = self.config.get('scanner', {}).get('verbose', False)
+
         logger.info(f"IPv9 Resolver initialized with DNS servers: {self.primary_dns}, {self.secondary_dns}")
+        if self.verbose:
+            logger.info(f"  ► Verbose mode: ENABLED")
+            logger.info(f"  ► DNS verification: {'ENABLED' if self.verify_dns else 'DISABLED'}")
+            logger.info(f"  ► Timeout: {self.config.get('scanner', {}).get('timeout', 5)}s")
 
     def _create_resolver(self, nameserver: str) -> dns.resolver.Resolver:
         """Create a DNS resolver instance for the specified nameserver"""
@@ -57,36 +64,75 @@ class IPv9Resolver:
         Returns:
             List of IP addresses or record values
         """
-        logger.debug(f"Resolving {hostname} (type: {record_type})")
+        if self.verbose:
+            logger.info(f"  ► Initiating DNS query: {hostname} (type: {record_type})")
+            logger.info(f"  ► Primary DNS server: {self.primary_dns}")
 
         try:
             # Query primary DNS
+            import time
+            start_time = time.time()
             primary_results = self._query_dns(self.primary_resolver, hostname, record_type)
+            query_time = (time.time() - start_time) * 1000  # Convert to ms
+
+            if self.verbose:
+                logger.info(f"  ► Primary DNS response: {len(primary_results)} record(s) in {query_time:.1f}ms")
+                for idx, result in enumerate(primary_results, 1):
+                    logger.info(f"    {idx}. {result}")
 
             if self.verify_dns:
+                if self.verbose:
+                    logger.info(f"  ► Verifying with secondary DNS: {self.secondary_dns}")
+
                 # Verify with secondary DNS
+                start_time = time.time()
                 secondary_results = self._query_dns(self.secondary_resolver, hostname, record_type)
+                verify_time = (time.time() - start_time) * 1000
+
+                if self.verbose:
+                    logger.info(f"  ► Secondary DNS response: {len(secondary_results)} record(s) in {verify_time:.1f}ms")
 
                 # Check if results match
                 if set(primary_results) != set(secondary_results):
                     logger.warning(
-                        f"DNS mismatch for {hostname}: "
-                        f"Primary={primary_results}, Secondary={secondary_results}"
+                        f"  ▲ DNS VERIFICATION MISMATCH for {hostname}:"
                     )
+                    logger.warning(f"    Primary:   {primary_results}")
+                    logger.warning(f"    Secondary: {secondary_results}")
+                    logger.warning(f"  ▲ Using primary DNS results")
                     # Return primary but log the discrepancy
                     return primary_results
+                elif self.verbose:
+                    logger.info(f"  ✓ DNS verification PASSED - Results match")
 
-            logger.info(f"Resolved {hostname} to {primary_results}")
+            if self.verbose:
+                logger.info(f"  ✓ Resolution COMPLETE: {hostname} → {primary_results}")
+            else:
+                logger.info(f"Resolved {hostname} to {primary_results}")
+
             return primary_results
 
         except dns.resolver.NXDOMAIN:
-            logger.warning(f"Domain not found: {hostname}")
+            if self.verbose:
+                logger.warning(f"  ✗ Domain NOT FOUND: {hostname}")
+                logger.warning(f"    The domain does not exist in IPv9 DNS")
+            else:
+                logger.warning(f"Domain not found: {hostname}")
             return []
         except dns.resolver.Timeout:
-            logger.error(f"DNS timeout for {hostname}")
+            if self.verbose:
+                logger.error(f"  ✗ DNS TIMEOUT for {hostname}")
+                logger.error(f"    No response from DNS servers within timeout period")
+            else:
+                logger.error(f"DNS timeout for {hostname}")
             return []
         except Exception as e:
-            logger.error(f"DNS resolution error for {hostname}: {e}")
+            if self.verbose:
+                logger.error(f"  ✗ DNS RESOLUTION ERROR for {hostname}")
+                logger.error(f"    Error type: {type(e).__name__}")
+                logger.error(f"    Error message: {str(e)}")
+            else:
+                logger.error(f"DNS resolution error for {hostname}: {e}")
             return []
 
     def _query_dns(self, resolver: dns.resolver.Resolver, hostname: str, record_type: str) -> List[str]:
