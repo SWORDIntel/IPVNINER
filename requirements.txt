@@ -4,6 +4,10 @@
 dnspython>=2.0.0
 pyyaml>=5.4.0
 
+# TUI dependencies
+textual>=0.41.0
+rich>=13.0.0
+
 # API dependencies
 fastapi>=0.100.0
 uvicorn[standard]>=0.23.0

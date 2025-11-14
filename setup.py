@@ -33,6 +33,8 @@ setup(
     entry_points={
         'console_scripts': [
             'ipv9tool=ipv9tool.cli.commands:main',
+            'ipv9scan=ipv9tool.tui.main:main',
+            'ipv9api=ipv9tool.api.server:main',
         ],
     },
     classifiers=[

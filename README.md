@@ -1,15 +1,33 @@
 # IPv9 Scanner
 
-**Exploration and Discovery Tool for China's Decimal Network**
+**Comprehensive Network Intelligence Platform for China's Decimal Network**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.7+](https://img.shields.io/badge/python-3.7+-blue.svg)](https://www.python.org/downloads/)
 
-## Overview
+---
 
-IPv9 Scanner is a comprehensive toolkit for exploring China's "IPv9" (decimal network) infrastructure. IPv9 is a non-standard network addressing scheme that uses numeric "digital domain" names under the `.chn` pseudo-top-level domain. This tool provides DNS resolution, host discovery, port scanning, and domain enumeration capabilities specifically designed for IPv9 networks.
+## 🚀 Quick Start
 
-### What is IPv9?
+**One-command installation:**
+
+```bash
+./setup.sh
+```
+
+**Three ways to use:**
+
+```bash
+ipv9scan   # 🎯 Interactive TUI with real-time logs
+ipv9api    # 🚀 REST API server
+ipv9tool   # 🖥️ CLI tool for scripting
+```
+
+That's it! See [INSTALL.md](INSTALL.md) for detailed installation and usage guide.
+
+---
+
+## What is IPv9?
 
 IPv9 is China's experimental "decimal network" that uses:
 - **Numeric domain names** based on phone numbers (e.g., `8613812345678.chn`)
@@ -17,417 +35,393 @@ IPv9 is China's experimental "decimal network" that uses:
 - **Standard IP routing** - domains resolve to normal IPv4/IPv6 addresses
 - **DNS overlay architecture** - no new protocol stack required
 
-Example IPv9 sites:
+**Example IPv9 sites:**
 - `www.v9.chn`
 - `em777.chn`
 - `www.hqq.chn`
 
-## Features
-
-### Core Capabilities
-
-- **DNS Resolution**: Query IPv9 DNS servers for `.chn` and numeric domains
-- **DNS Caching**: Efficient local caching with configurable TTL
-- **Multi-Server Verification**: Validate DNS responses across multiple servers to detect spoofing
-- **Host Discovery**:
-  - ICMP ping
-  - TCP ping
-  - HTTP/HTTPS probing
-- **Port Scanning**:
-  - Nmap integration with service detection
-  - Masscan support for high-speed scanning
-  - Customizable port ranges and scan types
-- **Domain Enumeration**:
-  - Pattern-based brute forcing
-  - Phone number range enumeration
-  - Chinese mobile prefix scanning
-  - Wordlist-based discovery
-
-### Security Features
-
-- **Rate Limiting**: Token bucket algorithm to control scan speed
-- **Sandbox Mode**: Isolated execution environment
-- **Audit Logging**: Comprehensive logging of all operations
-- **DNS Verification**: Multi-server DNS response validation
-- **Privilege Dropping**: Run with minimal required permissions
-
-### Architecture
-
-```
-┌─────────────────────────────────────────────────┐
-│              IPv9 Scanner Tool                   │
-├─────────────────────────────────────────────────┤
-│  CLI Interface  │  Python API  │  Web Dashboard  │
-├─────────────────┴──────────────┴─────────────────┤
-│              Core Modules                        │
-│  ┌──────────┐  ┌─────────┐  ┌──────────────┐   │
-│  │   DNS    │  │ Scanner │  │   Security   │   │
-│  │ Resolver │  │ Module  │  │   Controls   │   │
-│  └──────────┘  └─────────┘  └──────────────┘   │
-└─────────────────────────────────────────────────┘
-           │              │              │
-           ▼              ▼              ▼
-    ┌──────────┐   ┌──────────┐   ┌──────────┐
-    │ IPv9 DNS │   │  Targets │   │ System   │
-    │ Servers  │   │  (IPv4/6)│   │ Resources│
-    └──────────┘   └──────────┘   └──────────┘
-```
-
-## Installation
-
-### Quick Start (Debian/Ubuntu)
-
-```bash
-# Clone repository
-git clone https://github.com/SWORDIntel/IPVNINER
-cd IPVNINER
-
-# Run installation script
-sudo ./scripts/install.sh
-```
-
-### Manual Installation
-
-```bash
-# Install system dependencies
-sudo apt-get update
-sudo apt-get install python3 python3-pip dnsmasq nmap masscan dnsutils
-
-# Install Python package
-sudo pip3 install .
-
-# Setup DNS forwarding
-sudo ./scripts/setup-dns.sh
-```
-
-### Requirements
-
-**System:**
-- Debian 10+ or Ubuntu 18.04+
-- Python 3.7+
-- Root access (for DNS configuration and raw socket scanning)
-
-**Dependencies:**
-- `dnsmasq` or `unbound` (DNS forwarding)
-- `nmap` (port scanning)
-- `masscan` (optional, for high-speed scanning)
-- `dnspython` (Python DNS library)
-- `pyyaml` (configuration files)
-
-## Quick Start
-
-### Resolve an IPv9 Domain
-
-```bash
-ipv9tool resolve www.v9.chn
-```
-
-Output:
-```
-www.v9.chn resolves to:
-  203.0.113.10
-```
-
-### Ping an IPv9 Host
-
-```bash
-ipv9tool ping em777.chn
-```
-
-### Scan IPv9 Host Ports
-
-```bash
-ipv9tool scan www.v9.chn --ports 80,443,8080
-```
-
-### HTTP Probe
-
-```bash
-ipv9tool http www.v9.chn
-```
-
-### Enumerate Domains
-
-```bash
-# Enumerate phone number pattern
-# N = any digit (0-9)
-ipv9tool enumerate "861381234NNNN" --max 1000
-```
-
-## Configuration
-
-Main configuration file: `/etc/ipv9tool/ipv9tool.yml`
-
-```yaml
-dns:
-  primary: "202.170.218.93"
-  secondary: "61.244.5.162"
-  cache_size: 1000
-  ttl: 300
-
-scanner:
-  rate_limit: 100      # packets per second
-  timeout: 5          # seconds
-  max_threads: 10
-
-security:
-  verify_dns: true
-  sandbox_mode: true
-  log_level: "INFO"
-```
-
-## Usage Examples
-
-### Command-Line Interface
-
-```bash
-# Resolve domain with JSON output
-ipv9tool resolve em777.chn --json
-
-# Ping with custom count
-ipv9tool ping www.v9.chn --count 10
-
-# Comprehensive port scan
-ipv9tool scan em777.chn --ports 1-65535 --type syn
-
-# HTTPS probe
-ipv9tool http www.v9.chn --https --port 443
-
-# Enumerate with pattern
-ipv9tool enumerate "86138NNNNNNNN" --max 5000
-
-# View cache statistics
-ipv9tool cache-stats
-```
-
-### Python API
-
-```python
-from ipv9tool.dns import IPv9Resolver
-from ipv9tool.scanner import PortScanner, DNSEnumerator
-
-# Resolve domain
-resolver = IPv9Resolver()
-addresses = resolver.resolve('www.v9.chn')
-print(addresses)  # ['203.0.113.10']
-
-# Scan ports
-scanner = PortScanner()
-result = scanner.scan_nmap('203.0.113.10', ports='1-1000')
-
-# Enumerate domains
-enumerator = DNSEnumerator(resolver)
-results = enumerator.brute_force_pattern('861381234NNNN')
-```
-
-### Advanced: Batch Scanning
-
-```python
-#!/usr/bin/env python3
-from ipv9tool.dns import IPv9Resolver
-from ipv9tool.scanner import PortScanner, DNSEnumerator
-import json
-
-resolver = IPv9Resolver()
-scanner = PortScanner()
-enumerator = DNSEnumerator(resolver)
-
-# Discover domains
-domains = enumerator.brute_force_pattern("861381234NNNN", max_combinations=100)
-
-# Scan each discovered host
-results = []
-for domain in domains:
-    for address in domain['addresses']:
-        scan = scanner.quick_scan(address)
-        results.append({
-            'hostname': domain['hostname'],
-            'address': address,
-            'scan': scan
-        })
-
-# Save results
-with open('results.json', 'w') as f:
-    json.dump(results, f, indent=2)
-```
-
-## Documentation
-
-- **[Comprehensive Usage Guide](docs/GUIDE.md)** - Detailed documentation
-- **Configuration Reference** - See `config/ipv9tool.yml`
-- **API Documentation** - See source code docstrings
-
-## Architecture Details
-
-### DNS Resolver Module
-
-- **IPv9Resolver**: Queries IPv9 DNS servers
-- **DNSCache**: LRU cache for DNS results
-- **DNSForwarder**: Generates dnsmasq/unbound configs
-
-### Scanner Module
-
-- **PortScanner**: Nmap/masscan integration
-- **HostDiscovery**: Ping and TCP probing
-- **DNSEnumerator**: Domain enumeration
-
-### Security Module
-
-- **RateLimiter**: Token bucket rate limiting
-- **Sandbox**: Process isolation
-- **Logging**: Audit trail and monitoring
-
-## Security Considerations
-
-### Best Practices
-
-1. **Always use rate limiting** - Default 100 packets/sec
-2. **Enable DNS verification** - Detect spoofing
-3. **Run in sandbox mode** - Minimize risk
-4. **Monitor logs** - `/var/log/ipv9tool.log`
-5. **Respect targets** - Don't overwhelm systems
-
-### Rate Limiting
-
-```yaml
-scanner:
-  rate_limit: 100  # Max packets per second
-```
-
-### Sandboxing
-
-```yaml
-security:
-  sandbox_mode: true  # Enable isolation
-```
-
-### DNS Verification
-
-```yaml
-security:
-  verify_dns: true  # Compare responses from both DNS servers
-```
-
-## Troubleshooting
-
-### DNS Not Working
-
-```bash
-# Check dnsmasq
-sudo systemctl status dnsmasq
-sudo tail -f /var/log/ipv9-dnsmasq.log
-
-# Test DNS manually
-dig @202.170.218.93 www.v9.chn
-
-# Verify resolv.conf
-cat /etc/resolv.conf
-```
-
-### Scanning Permission Denied
-
-```bash
-# SYN scans require root
-sudo ipv9tool scan www.v9.chn
-
-# Or use TCP scan
-ipv9tool scan www.v9.chn --type tcp
-```
-
-### IPv9 DNS Unreachable
-
-```bash
-# Check connectivity
-ping -c 4 202.170.218.93
-ping -c 4 61.244.5.162
-
-# Try direct query
-dig @202.170.218.93 www.v9.chn
-```
-
-## Development
-
-### Project Structure
-
-```
-ipv9-scanner/
-├── ipv9tool/              # Main Python package
-│   ├── dns/               # DNS resolver
-│   ├── scanner/           # Scanning modules
-│   ├── cli/               # CLI interface
-│   ├── config/            # Configuration
-│   └── security/          # Security controls
-├── config/                # Configuration files
-├── scripts/               # Installation scripts
-├── systemd/               # Service files
-├── docs/                  # Documentation
-├── tests/                 # Unit tests
-└── setup.py               # Installation script
-```
-
-### Running Tests
-
-```bash
-# Install development dependencies
-pip3 install -e .[dev]
-
-# Run tests
-pytest tests/
-
-# Run with coverage
-pytest --cov=ipv9tool tests/
-```
-
-### Contributing
-
-Contributions are welcome! Please:
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests
-5. Submit a pull request
-
-## Legal and Ethical Notice
-
-⚠️ **Important**: This tool is for **authorized security testing, research, and educational purposes only**.
-
-- Only scan systems you have **explicit permission** to test
-- Respect rate limits and target resources
-- Follow **responsible disclosure** for vulnerabilities
-- Comply with **local laws and regulations**
-- IPv9 is **experimental** - use responsibly
-
-**The authors assume no liability for misuse of this tool.**
-
-## References
-
-- [IPv9 Wikipedia](https://en.wikipedia.org/wiki/IPv9_(China))
-- [Explaining China's IPv9 - CircleID](https://circleid.com/posts/explaining_chinas_ipv9)
-- [IPv9 Research Paper](https://reference-global.com/article/10.21307/ijanmc-2020-026)
-- [The Register: China disowns IPv9 hype](https://www.theregister.com/2004/07/06/ipv9_hype_dismissed/)
-
-## License
-
-MIT License - See [LICENSE](LICENSE) file for details
-
-## Authors
-
-IPv9 Research Team
-
-## Acknowledgments
-
-- Dnsmasq and Unbound projects
-- Nmap and Masscan developers
-- Python dnspython library
-- Chinese IPv9 research community
-
-## Support
-
-- **Issues**: [GitHub Issues](https://github.com/SWORDIntel/IPVNINER/issues)
-- **Documentation**: [Comprehensive Guide](docs/GUIDE.md)
-- **Email**: research@example.com
+IPv9 Scanner provides comprehensive tools to explore, enumerate, and audit this network infrastructure.
 
 ---
 
-**Note**: IPv9 is an experimental network system developed in China and is not recognized by international standards bodies. This tool is provided for research and educational purposes to understand alternative network addressing schemes.
+## 🎯 Features
+
+### Interactive TUI (ipv9scan)
+
+Real-time Text User Interface with streaming logs:
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  IPv9 Scanner                                      [q]Quit  │
+├─────────────────────────────────────────────────────────────┤
+│  Scanner │ Hosts │ Ports │ Domains                          │
+├─────────────────────────────────────────────────────────────┤
+│  Target: www.v9.chn                                         │
+│  [Resolve DNS] [Ping] [Port Scan] [Enumerate]              │
+│  [Full Audit] [Masscan] [Monitor] [Stop]                   │
+├─────────────────────────────────────────────────────────────┤
+│  Logs (streaming):                                          │
+│  [13:45:12] [INFO] Resolving www.v9.chn...                 │
+│  [13:45:12] [SUCCESS] Resolved to: 1.2.3.4                 │
+│  [13:45:13] [INFO] Starting port scan...                   │
+│  [13:45:15] [SUCCESS] Found 3 open ports                   │
+├─────────────────────────────────────────────────────────────┤
+│  Statistics: 15 domains | 42 hosts | 128 ports             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+**Features:**
+- ✅ Real-time log streaming
+- ✅ DNS resolution, ping, port scanning
+- ✅ Domain enumeration (pattern-based, phone numbers)
+- ✅ Full network audit (6-phase methodology)
+- ✅ Masscan integration (high-speed enumeration)
+- ✅ Live statistics dashboard
+- ✅ Discovered hosts, ports, domains tables
+- ✅ Keyboard shortcuts (q=quit, d=dark mode, s=stats, l=clear logs, h=help)
+
+### REST API Server (ipv9api)
+
+Production-ready FastAPI server with OpenAPI documentation:
+
+```bash
+# Start server
+ipv9api
+
+# Access documentation
+open http://localhost:8000/docs
+```
+
+**Features:**
+- 🔌 15+ REST endpoints
+- 📚 Automatic OpenAPI/Swagger docs
+- ⚙️ Background job processing
+- 💾 SQLite database backend
+- 🔄 Async I/O (1000+ req/s)
+- 🌐 CORS support
+
+**Quick API Examples:**
+
+```python
+from ipv9tool.api.client import IPv9APIClient
+
+client = IPv9APIClient("http://localhost:8000")
+
+# DNS resolution
+result = client.resolve("www.v9.chn")
+print(result.addresses)  # ['1.2.3.4']
+
+# Port scan
+scan = client.scan("em777.chn", ports="80,443")
+for host in scan.hosts:
+    for port in host.ports:
+        print(f"{port.port}: {port.state}")
+
+# Full network audit (background job)
+job = client.start_audit(scan_dns=True, scan_web=True)
+result = client.wait_for_job(job.job_id, timeout=3600)
+
+# Export results
+from ipv9tool.export import DataExporter
+exporter = DataExporter()
+exporter.export_audit_results(
+    result.result,
+    output_dir='./reports',
+    formats=['json', 'html', 'csv']
+)
+```
+
+### CLI Tool (ipv9tool)
+
+Command-line interface for scripting and automation:
+
+```bash
+# DNS resolution
+ipv9tool resolve www.v9.chn
+
+# Ping test
+ipv9tool ping em777.chn
+
+# Port scanning
+ipv9tool scan em777.chn --ports 80,443,8080
+
+# Domain enumeration
+ipv9tool enumerate --pattern "861381234NNNN" --max-results 100
+
+# Cache statistics
+ipv9tool cache-stats
+```
+
+---
+
+## 🏗️ Architecture
+
+```
+┌─────────────────────────────────────────────────────────┐
+│              IPv9 Scanner Platform                       │
+├─────────────────────────────────────────────────────────┤
+│  User Interfaces                                         │
+│  ├── ipv9scan   - Interactive TUI (Textual)            │
+│  ├── ipv9api    - REST API Server (FastAPI)            │
+│  └── ipv9tool   - CLI Tool (Click)                     │
+├─────────────────────────────────────────────────────────┤
+│  Core Capabilities                                       │
+│  ├── DNS Resolution (IPv9 .chn domains)                │
+│  ├── Port Scanning (nmap/masscan)                      │
+│  ├── Host Discovery (ICMP, TCP probes)                 │
+│  ├── Domain Enumeration (pattern-based)                │
+│  ├── Network Auditing (6-phase methodology)            │
+│  ├── Masscan Integration (10M pps)                     │
+│  ├── Continuous Monitoring (change detection)          │
+│  └── Multi-format Export (JSON/CSV/HTML/MD)            │
+├─────────────────────────────────────────────────────────┤
+│  Backend Services                                        │
+│  ├── SQLite Database (async)                           │
+│  ├── Background Job System                             │
+│  ├── DNS Cache (LRU)                                   │
+│  └── Rate Limiting (token bucket)                      │
+└─────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 🎓 Core Capabilities
+
+### 1. DNS Resolution
+- Query IPv9 DNS servers for `.chn` domains
+- Multi-server verification (detect spoofing)
+- LRU caching with configurable TTL
+- Support for numeric hostnames (phone numbers)
+
+### 2. Host Discovery
+- **ICMP Ping**: Traditional ping probes
+- **TCP Ping**: Connection-based detection
+- **HTTP/HTTPS Probing**: Web service detection
+- **Parallel Discovery**: Multi-threaded scanning
+
+### 3. Port Scanning
+- **Nmap Integration**: Service detection, OS fingerprinting
+- **Masscan Support**: High-speed scanning (up to 10M packets/second)
+- **Customizable Ranges**: Specific ports or full range (1-65535)
+- **Service Identification**: Banner grabbing, version detection
+
+### 4. Domain Enumeration
+- **Pattern-based**: Brute force with wildcards (e.g., `861381234NNNN`)
+- **Phone Number Ranges**: Chinese mobile prefixes (130-199)
+- **Wordlist Discovery**: Custom domain lists
+- **Parallel Enumeration**: 10 concurrent threads (configurable)
+
+### 5. Network Auditing
+Comprehensive 6-phase methodology:
+1. **DNS Infrastructure** (20%) - Test IPv9 DNS servers, verify resolution
+2. **Domain Enumeration** (40%) - Pattern-based, phone number scanning
+3. **Host Discovery** (60%) - ICMP ping, TCP probing, HTTP detection
+4. **Port Scanning** (80%) - Common ports (fast) or all ports (comprehensive)
+5. **Deep Inspection** (90%) - HTTP/HTTPS probing, service fingerprinting
+6. **Analysis & Reporting** (100%) - Statistics, security scoring, recommendations
+
+### 6. Masscan Integration
+- **High-speed Enumeration**: Full IPv9 space scanning
+- **Scan Planning**: Time/coverage calculations
+- **Sample-based Scanning**: Configurable sample rates
+- **IPv9 Address Blocks**: Covers 40+ Chinese /8 IP blocks
+
+### 7. Continuous Monitoring
+- **Real-time Change Detection**: Automatic notification of network changes
+- **Configurable Intervals**: Custom monitoring frequency
+- **Callback System**: Hook into change events
+- **Status Tracking**: Timestamps and change history
+
+### 8. Multi-format Export
+- **JSON**: Machine-readable full data
+- **CSV**: Spreadsheet-compatible lists
+- **XML**: Structured data export
+- **HTML**: Interactive visual reports with styling
+- **Markdown**: Documentation-friendly reports
+
+---
+
+## 🔒 Security Features
+
+- **Rate Limiting**: Token bucket algorithm to control scan speed
+- **Input Validation**: Pydantic models for all API inputs
+- **SQL Injection Prevention**: Parameterized queries throughout
+- **Privilege Dropping**: Run with minimal required permissions
+- **Sandbox Mode**: Isolated execution environment
+- **Audit Logging**: Comprehensive logging of all operations
+- **DNS Verification**: Multi-server response validation
+
+---
+
+## 📖 Documentation
+
+- **[INSTALL.md](INSTALL.md)** - Installation and quick start guide
+- **[docs/GUIDE.md](docs/GUIDE.md)** - Comprehensive user guide
+- **[docs/API.md](docs/API.md)** - API reference (1000+ lines)
+- **[docs/API_QUICKSTART.md](docs/API_QUICKSTART.md)** - API quick start
+- **[API_ENHANCEMENT_SUMMARY.md](API_ENHANCEMENT_SUMMARY.md)** - Enhancement details
+
+---
+
+## 🧪 Examples
+
+Complete usage examples in `examples/` directory:
+
+```bash
+# Basic API operations
+python examples/basic_api_usage.py
+
+# Full enumeration
+python examples/full_enumeration.py
+
+# Network audit
+python examples/network_audit.py
+
+# Continuous monitoring
+python examples/continuous_monitoring.py
+
+# Masscan full scan
+python examples/masscan_full_scan.py
+```
+
+---
+
+## 🔧 Configuration
+
+Edit `/etc/ipv9tool/ipv9tool.yml`:
+
+```yaml
+dns:
+  servers:
+    - 202.170.218.93  # IPv9 DNS Primary
+    - 61.244.5.162    # IPv9 DNS Secondary
+  cache_ttl: 3600
+  timeout: 5
+
+scanning:
+  default_ports: "21,22,23,25,80,443,3389,8080,8443"
+  rate_limit: 100
+  max_threads: 10
+
+audit:
+  enable_masscan: true
+  deep_scan: false
+  export_format: ["json", "html"]
+```
+
+---
+
+## 📊 Project Statistics
+
+- **Total Modules**: 33 Python files
+- **Code Lines**: ~8,000 (including documentation)
+- **API Endpoints**: 15+ REST endpoints
+- **Database Tables**: 4 (hosts, ports, domains, scans)
+- **Export Formats**: 5 (JSON, CSV, XML, HTML, Markdown)
+- **Documentation**: 3,000+ lines
+
+---
+
+## 🛠️ System Requirements
+
+- **OS**: Ubuntu 20.04+, Debian 10+, or similar
+- **Python**: 3.7+
+- **RAM**: 2GB minimum, 4GB recommended
+- **Disk**: 1GB for installation, more for scan results
+- **Network**: Outbound access to IPv9 DNS servers
+
+**Dependencies:**
+- System: nmap, masscan, dnsmasq, dnsutils, sqlite3
+- Python: fastapi, textual, rich, dnspython, pyyaml, aiosqlite
+
+---
+
+## 🚀 Common Use Cases
+
+### Quick Domain Check
+
+```bash
+# Using TUI
+ipv9scan
+# Enter domain, click "Resolve DNS"
+
+# Using API
+curl -X POST http://localhost:8000/dns/resolve \
+  -H "Content-Type: application/json" \
+  -d '{"hostname": "www.v9.chn"}'
+
+# Using CLI
+ipv9tool resolve www.v9.chn
+```
+
+### Port Scanning
+
+```bash
+# Using TUI
+ipv9scan
+# Enter target, click "Port Scan"
+
+# Using API
+python -c "
+from ipv9tool.api.client import IPv9APIClient
+client = IPv9APIClient('http://localhost:8000')
+scan = client.scan('em777.chn', ports='1-1000')
+print(scan)
+"
+
+# Using CLI
+ipv9tool scan em777.chn --ports 1-1000
+```
+
+### Full Network Audit
+
+```bash
+# Using TUI
+ipv9scan
+# Click "Full Audit" button
+
+# Using API
+python examples/network_audit.py
+
+# Using CLI (enumeration only)
+ipv9tool enumerate --pattern "861381234NNNN" --max-results 10000
+```
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please read our contributing guidelines and submit pull requests.
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## ⚠️ Disclaimer
+
+This tool is for authorized security testing, research, and educational purposes only. Always obtain proper authorization before scanning networks you do not own or have permission to test.
+
+---
+
+## 🙏 Acknowledgments
+
+- Inspired by HDAIS workflow and masscan architecture
+- Built with FastAPI, Textual, Rich, and other excellent open-source projects
+- IPv9 DNS servers provided by China's decimal network infrastructure
+
+---
+
+## 📞 Support
+
+- **Documentation**: See `docs/` directory
+- **Examples**: See `examples/` directory
+- **API Docs**: http://localhost:8000/docs (when API running)
+- **Issues**: https://github.com/SWORDIntel/IPVNINER/issues
+
+---
+
+**Happy scanning! 🔍**
