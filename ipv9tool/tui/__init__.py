@@ -1,9 +1,9 @@
 """
 TUI Module for IPv9 Scanner
 
-Real-time text user interface with streaming logs.
+TEMPEST-Compliant Military TUI with tactical network operations interface.
 """
 
-from .main import IPv9ScannerTUI
+from .main import IPv9MilitaryTUI
 
-__all__ = ['IPv9ScannerTUI']
+__all__ = ['IPv9MilitaryTUI']
