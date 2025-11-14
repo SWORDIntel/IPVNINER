@@ -65,3 +65,61 @@ web:
   enabled: false
   host: "127.0.0.1"
   port: 8080
+
+# Proxy Configuration (Mullvad-style rotation)
+proxy:
+  # Enable proxy rotation
+  enable_rotation: false
+
+  # Rotation strategy: random, round_robin, least_used, fastest, country_based
+  rotation_strategy: "random"
+
+  # Rotation interval in seconds (0 = rotate on each request)
+  rotation_interval: 60
+
+  # Maximum failures before proxy is disabled
+  max_failures: 3
+
+  # Proxy list file path
+  proxy_file: "config/proxies.txt"
+
+  # Enable Tor integration (requires tor service running)
+  enable_tor: false
+  tor_host: "127.0.0.1"
+  tor_port: 9050
+  tor_control_port: 9051
+  tor_control_password: null
+
+  # Enable Mullvad VPN SOCKS5 proxies
+  enable_mullvad: false
+  mullvad_account: null  # Your Mullvad account number
+  mullvad_servers:
+    - country: "US"
+      city: "NewYork"
+      host: "us-nyc.mullvad.net"
+    - country: "US"
+      city: "LosAngeles"
+      host: "us-lax.mullvad.net"
+    - country: "GB"
+      city: "London"
+      host: "gb-lon.mullvad.net"
+    - country: "DE"
+      city: "Frankfurt"
+      host: "de-fra.mullvad.net"
+    - country: "SE"
+      city: "Stockholm"
+      host: "se-sto.mullvad.net"
+    - country: "NL"
+      city: "Amsterdam"
+      host: "nl-ams.mullvad.net"
+
+  # Direct proxy list (alternative to file)
+  proxy_list: []
+  # Example:
+  # - host: "1.2.3.4"
+  #   port: 1080
+  #   proxy_type: "socks5"
+  #   username: null
+  #   password: null
+  #   country: "US"
+  #   provider: "custom"

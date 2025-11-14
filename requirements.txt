@@ -19,6 +19,9 @@ python-multipart>=0.0.6
 requests>=2.31.0
 httpx>=0.24.0
 
+# Proxy support
+PySocks>=1.7.1  # SOCKS proxy support for requests
+
 # Optional dependencies for web dashboard
 flask>=2.0.0
 flask-cors>=3.0.10
