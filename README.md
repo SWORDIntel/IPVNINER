@@ -56,7 +56,7 @@ Professional tactical interface with TEMPEST-compliant design:
 ████████████████████████████████████████████████████████████████████████████████
 
 ╔═══════════════════╗  ╔══════════════════════════════════════════════════╗
-║  SYSTEM STATUS   ║  ║   TACTICAL NETWORK INTELLIGENCE                   ║
+║  SYSTEM STATUS    ║  ║   TACTICAL NETWORK INTELLIGENCE                  ║
 ╠═══════════════════╣  ╠══════════════════════════════════════════════════╣
 │ SYS STATUS:    █  │  │ DOMAINS DISCOVERED:                       1,245  │
 │ INTEGRITY:     █  │  │ IP ADDRESSES:                             3,891  │
