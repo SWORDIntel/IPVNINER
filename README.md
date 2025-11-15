@@ -56,7 +56,7 @@ Professional tactical interface with TEMPEST-compliant design:
 ████████████████████████████████████████████████████████████████████████████████
 
 ╔═══════════════════╗  ╔══════════════════════════════════════════════════╗
-║  SYSTEM STATUS   ║  ║   TACTICAL NETWORK INTELLIGENCE                ║
+║  SYSTEM STATUS   ║  ║   TACTICAL NETWORK INTELLIGENCE                   ║
 ╠═══════════════════╣  ╠══════════════════════════════════════════════════╣
 │ SYS STATUS:    █  │  │ DOMAINS DISCOVERED:                       1,245  │
 │ INTEGRITY:     █  │  │ IP ADDRESSES:                             3,891  │
@@ -65,19 +65,19 @@ Professional tactical interface with TEMPEST-compliant design:
 ╚═══════════════════╝  ╚══════════════════════════════════════════════════╝
 
 ╔═══════════════════════════ TACTICAL OPERATIONS ════════════════════════════╗
-│ PRIMARY OPS:  [DNS RESOLVE] [PING SWEEP] [PORT SCAN] [ENUMERATE]          │
-│ ADV OPS:      [FULL AUDIT] [MASSCAN] [MONITOR] [█ STOP]                   │
+│ PRIMARY OPS:  [DNS RESOLVE] [PING SWEEP] [PORT SCAN] [ENUMERATE]           │
+│ ADV OPS:      [FULL AUDIT] [MASSCAN] [MONITOR] [█ STOP]                    │
 │ TARGET:       www.v9.chn or IPv4/IPv6                                      │
-│ MISSION PROGRESS: ████████████░░░░░░░░░░░ 60%                             │
+│ MISSION PROGRESS: ████████████░░░░░░░░░░░ 60%                              │
 ╚════════════════════════════════════════════════════════════════════════════╝
 
-╔═══════════════════════════ TACTICAL LOG ══════════════════════════════════╗
-│ 124530Z ● OPR   MISSION 1000: DNS RESOLUTION OPERATION                    │
-│ 124531Z ► INF   TARGET: www.v9.chn                                        │
-│ 124532Z ✓ OPS   DNS RESOLUTION: SUCCESS                                   │
-│ 124532Z ► INF     ► RESOLVED ADDRESS: 1.2.3.4                             │
-│ 124535Z ● OPR   MISSION 1001: PORT SCAN OPERATION                         │
-│ 124536Z ✓ OPS   PORT SCAN: 3 PORTS IDENTIFIED                             │
+╔═══════════════════════════ TACTICAL LOG ═══════════════════════════════════╗
+│ 124530Z ● OPR   MISSION 1000: DNS RESOLUTION OPERATION                     │
+│ 124531Z ► INF   TARGET: www.v9.chn                                         │
+│ 124532Z ✓ OPS   DNS RESOLUTION: SUCCESS                                    │
+│ 124532Z ► INF     ► RESOLVED ADDRESS: 1.2.3.4                              │
+│ 124535Z ● OPR   MISSION 1001: PORT SCAN OPERATION                          │
+│ 124536Z ✓ OPS   PORT SCAN: 3 PORTS IDENTIFIED                              │
 ╚════════════════════════════════════════════════════════════════════════════╝
 
 ████████████████████████████████████████████████████████████████████████████████
